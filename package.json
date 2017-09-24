@@ -1,7 +1,7 @@
 {
   "name": "node-botometer",
   "main": "predictive.js",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "author": {
     "name": "Keith Collins",
     "url": "http://twitter.com/collinskeith"
