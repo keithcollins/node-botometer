@@ -1,0 +1,17 @@
+{
+  "name": "node-botometer",
+  "main": "predictive.js",
+  "version": "0.1.0",
+  "author": {
+    "name": "Keith Collins",
+    "url": "http://twitter.com/collinskeith"
+  },
+  "description": "Evaluates Twitter accounts to determine whether they're bots",
+  "homepage": "https://github.com/keithcollins/predictive",
+  "license": "MIT",
+  "dependencies": {
+    "bluebird": "^3.5.0",
+    "twit": "^2.2.5",
+    "unirest": "^0.5.1"
+  }
+}
