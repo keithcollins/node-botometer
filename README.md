@@ -2,7 +2,7 @@
 
 This package evaluates Twitter accounts using **[Botometer](https://botometer.iuni.iu.edu/#!/)**, which "checks the activity of a Twitter account and gives it a score based on how likely the account is to be a bot. Higher scores are more bot-like."
 
-It uses [Twit](https://github.com/ttezel/twit) and Botometer's [mashape API](https://market.mashape.com/OSoMe/botometer)
+It uses [Twit](https://github.com/ttezel/twit) and Botometer's [mashape API](https://market.mashape.com/OSoMe/botometer). Twitter application and Botometer mashape API keys are required.
 
 ## Install
 
@@ -22,6 +22,8 @@ const B = new botometer({
   mashape_key: '',
   rate_limit: 0
 });
+
+Note application level tokens `access_token` and `access_token_secret` are not required or recommended. Use consumer keys and set `app_only_auth` to `true` for less restrictive rate limiting from Twitter.
 
 ```
 
