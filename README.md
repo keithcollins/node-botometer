@@ -10,6 +10,8 @@ It uses [Twit](https://github.com/ttezel/twit) and Botometer's [mashape API](htt
 
 ## Use
 
+### Setup
+
 ```js
 const botometer = require('node-botometer');
 
@@ -22,19 +24,20 @@ const B = new botometer({
   mashape_key: '',
   rate_limit: 0
 });
+```
 
 Note application level tokens `access_token` and `access_token_secret` are not required or recommended. Use consumer keys and set `app_only_auth` to `true` for less restrictive rate limiting from Twitter.
 
-```
-
-Get Botometer scores for Twitter accounts in bulk:
+### Get Botometer scores for Twitter accounts in bulk:
 ```js
 B.getBatchBotScores(["collinskeith","usinjuries","actual_ransom"],data => {
   console.log(data);
 });
 ```
 
-Get Botometer scores for one Twitter account:
+Note this takes about six seconds per account and I'm looking for ideas to make it faster!
+
+### Get Botometer scores for one Twitter account:
 ```js
 async function awaitScore(name) {
   const data = await B.getBotScore(name);
