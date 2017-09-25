@@ -1,6 +1,6 @@
 {
   "name": "node-botometer",
-  "main": "predictive.js",
+  "main": "index.js",
   "version": "0.1.1",
   "author": {
     "name": "Keith Collins",
