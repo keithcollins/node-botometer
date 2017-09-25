@@ -28,22 +28,15 @@ const B = new botometer({
 });
 ```
 
-### Get Botometer scores for Twitter accounts in bulk:
+### Get Botometer scores
 
-This takes about six seconds per account and I'm looking for ideas to make it faster!
+You can get scores for one account or for many. It takes about six seconds per account and I'm looking for ideas to make it faster!
 
 ```js
-B.getBatchBotScores(["collinskeith","usinjuries","actual_ransom"],data => {
+// array can be one screen name or many
+const names = ["collinskeith","usinjuries","actual_ransom"];
+
+B.getBatchBotScores(names,data => {
   console.log(data);
 });
-```
-
-### Get Botometer scores for one Twitter account:
-```js
-async function awaitScore(name) {
-  const data = await B.getBotScore(name);
-  console.log(data.botometer);
-}
-
-awaitScore("collinskeith");
 ```
