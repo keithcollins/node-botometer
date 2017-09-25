@@ -63,30 +63,39 @@ const botometer = function(config) {
   this.getBotScore = function(screen_name) {
     const data = {user:null,timeline:null,mentions:null};
     return new Promise((resolve, reject) => {
+      // get this user's timeline - latest 200 tweets
       this.searchTwitter('statuses/user_timeline',{screen_name:screen_name,count:200})
         .catch(e => {
-          // if no timeline resolve with empty array
-          resolve([]);
+          // if error collecting timeline resolve with null
+          resolve(null);
         })
         .then(timeline => {
+          // save user and timeline data
           data.user = timeline[0].user;
           data.timeline = timeline;
+          // get latest 100 mentions of this user by search screen name
           return this.searchTwitter('search/tweets',{q:"@"+screen_name,count:100})
         })
         .catch(e => {
           // if error finding mentions move on with empty array
+          // because having zero mentions is meaningful
           return [];
         })
         .then(mentions => {
+          // save mentions
           data.mentions = mentions;
+          // get botometer scores
           return this.getBotometer(data);
         })
         .catch(e => {
-          // if error on botometer resolve with collected data
-          data.botometer = {};
-          resolve(data);
+          // if error on botometer resolve with null
+          resolve(null);
         })
         .then(botometer => {
+          // since we already save full user object, 
+          // delete user object prop from botomter
+          if (botometer.hasOwnProperty("user")) delete botometer.user;
+          // save botometer scores and resolve with data
           data.botometer = botometer;
           resolve(data);
         });
@@ -99,8 +108,8 @@ const botometer = function(config) {
     for (let name of names) {
       writeLog("Awaiting score for "+name);
       const data = await this.getBotScore(name);
-      if (typeof data.botometer.scores !== "undefined") {
-        scores.push(data.botometer);
+      if (data && typeof data.botometer.scores !== "undefined") {
+        scores.push(data);
         writeLog(name+" is a "+data.botometer.scores.universal);
       } else {
         writeLog("No score found for "+name);
