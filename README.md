@@ -1,6 +1,6 @@
 # node-botometer
 
-This package evaluates Twitter accounts using **[Botometer](https://botometer.iuni.iu.edu/#!/)**, which "checks the activity of a Twitter account and gives it a score based on how likely the account is to be a bot. Higher scores are more bot-like."
+`node-botometer` evaluates Twitter accounts using [Botometer](https://botometer.iuni.iu.edu/#!/), which "checks the activity of a Twitter account and gives it a score based on how likely the account is to be a bot. Higher scores are more bot-like."
 
 It uses [Twit](https://github.com/ttezel/twit) and Botometer's [mashape API](https://market.mashape.com/OSoMe/botometer). Twitter application and Botometer mashape API keys are required.
 
