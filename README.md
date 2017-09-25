@@ -14,6 +14,8 @@ It uses [Twit](https://github.com/ttezel/twit) and Botometer's [mashape API](htt
 
 Use app-only keys `consumer_key` and `consumer_secret`, and set `app_only_auth` to `true` for less restrictive rate limiting from Twitter. User-level tokens `access_token` and `access_token_secret` are allowed but not required or recommended.
 
+The `rate_limit` (milliseconds) will apply to any calls to the Twitter or mashape APIs. Set `log_progress` to `true` to console log progress on score collection for each name.
+
 ```js
 const botometer = require('node-botometer');
 
@@ -24,7 +26,8 @@ const B = new botometer({
   access_token_secret: null,
   app_only_auth: true,
   mashape_key: '',
-  rate_limit: 0
+  rate_limit: 0,
+  log_progress: true
 });
 ```
 

@@ -19,7 +19,15 @@ const botometer = function(config) {
   const mashape_key = config.mashape_key;
 
   // delay for twitter API calls
-  const rate_limit = config.rate_limit;
+  const rate_limit = config.rate_limit || 0;
+
+  // whether to console log names as they're collected
+  const log_progress = config.log_progress || true;
+
+  // all logging here
+  const writeLog = function(message) {
+    if (log_progress) console.log(message);
+  }
 
   // search with multiple endpoints
   this.searchTwitter = function(ep,opts) {
@@ -44,10 +52,10 @@ const botometer = function(config) {
           .header("Accept", "application/json")
           .send(data)
           .end(function (result) {
-            // console.log(result.status, result.headers, result.body);
+            // writeLog(result.status, result.headers, result.body);
             resolve(result.body);
           });
-      },0);
+      },rate_limit);
     });
   }
 
@@ -75,7 +83,7 @@ const botometer = function(config) {
         })
         .catch(e => {
           // if error on botometer resolve with collected data
-          data.botometer = [];
+          data.botometer = {};
           resolve(data);
         })
         .then(botometer => {
@@ -89,13 +97,14 @@ const botometer = function(config) {
   this.getBatchBotScores = async function(names,cb) {
     const scores = [];
     for (let name of names) {
-      console.log("Awaiting score for "+name);
+      writeLog("Awaiting score for "+name);
       const data = await this.getBotScore(name);
-      scores.push({
-        user: data.user,
-        botometer: data.botometer
-      });
-      if (typeof data.botometer !== "undefined") console.log(name+" is a "+data.botometer.scores.universal);
+      if (typeof data.botometer.scores !== "undefined") {
+        scores.push(data.botometer);
+        writeLog(name+" is a "+data.botometer.scores.universal);
+      } else {
+        writeLog("No score found for "+name);
+      }
     }
     cb(scores);
   }
