@@ -12,7 +12,7 @@ It uses [Twit](https://github.com/ttezel/twit) and Botometer's [mashape API](htt
 
 ### Setup
 
-Note user-level tokens `access_token` and `access_token_secret` are not required or recommended. Use app-only keys `consumer_key` and `consumer_secret`, and set `app_only_auth` to `true` for less restrictive rate limiting from Twitter.
+Use app-only keys `consumer_key` and `consumer_secret`, and set `app_only_auth` to `true` for less restrictive rate limiting from Twitter. User-level tokens `access_token` and `access_token_secret` are allowed but not required or recommended.
 
 ```js
 const botometer = require('node-botometer');
