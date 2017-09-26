@@ -12,9 +12,19 @@ It uses [Twit](https://github.com/ttezel/twit) and Botometer's [mashape API](htt
 
 ### Setup
 
-Use app-only keys `consumer_key` and `consumer_secret`, and set `app_only_auth` to `true` for less restrictive rate limiting from Twitter. User-level tokens `access_token` and `access_token_secret` are allowed but not required or recommended.
+Use app-only keys `consumer_key` (string) and `consumer_secret` (string), and set `app_only_auth` (boolean) to `true` for less restrictive rate limiting from Twitter. User-level tokens `access_token` (string) and `access_token_secret` (string) are allowed but not required or recommended.
 
-The `rate_limit` (milliseconds) will apply to any calls to the Twitter or mashape APIs. Set `log_progress` to `true` to console log progress on score collection for each name.
+`mashape_key` (string): Get a key from Botometer's [mashape API](https://market.mashape.com/OSoMe/botometer)
+
+`rate_limit` (integer): In milliseconds. Will apply to any calls to the Twitter or mashape APIs. Default: 0.
+
+`log_progress` (boolean): Set to `true` to console log progress on score collection for each name. Default: true.
+
+`include_user` (boolean): Include user data from Twitter in output object. Default: true.
+
+`include_timeline` (boolean): Include the 200 most recent tweets from this user in output object. Default: false.
+
+`include_mentions` (boolean): Include the 100 most recent mentions of this user in output object. Default: false.
 
 ```js
 const botometer = require('node-botometer');
@@ -27,7 +37,10 @@ const B = new botometer({
   app_only_auth: true,
   mashape_key: '',
   rate_limit: 0,
-  log_progress: true
+  log_progress: true,
+  include_user: true,
+  include_timeline: false,
+  include_mentions: false,
 });
 ```
 

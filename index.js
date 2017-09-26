@@ -24,6 +24,15 @@ const botometer = function(config) {
   // whether to console log names as they're collected
   const log_progress = config.log_progress || true;
 
+  // whether to include user data in output
+  const include_user = config.include_user || true;
+
+  // whether to include timeline data in output
+  const include_timeline = config.include_timeline || false;
+
+  // whether to include mentions data in output
+  const include_mentions = config.include_mentions || false;
+
   // all logging here
   const writeLog = function(message) {
     if (log_progress) console.log(message);
@@ -92,9 +101,13 @@ const botometer = function(config) {
           resolve(null);
         })
         .then(botometer => {
-          // since we already save full user object, 
+          // since we already save full user object,
           // delete user object prop from botomter
           if (botometer.hasOwnProperty("user")) delete botometer.user;
+          // delete any data not requested in config
+          if (!include_user && data.hasOwnProperty("user")) delete data.user;
+          if (!include_timeline && data.hasOwnProperty("timeline")) delete data.timeline;
+          if (!include_mentions && data.hasOwnProperty("mentions")) delete data.mentions;
           // save botometer scores and resolve with data
           data.botometer = botometer;
           resolve(data);
