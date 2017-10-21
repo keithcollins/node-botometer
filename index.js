@@ -102,14 +102,17 @@ const botometer = function(config) {
         })
         .then(botometer => {
           // since we already save full user object,
-          // delete user object prop from botomter
-          if (botometer.hasOwnProperty("user")) delete botometer.user;
-          // delete any data not requested in config
+          // overwrite botometer user prop to keep basic user data
+          botometer.user = {
+            screen_name: data.user.screen_name,
+            user_id: data.user.user_id
+          }
+          // save botometer scores to data
+          data.botometer = botometer;
+          // delete any data not requested in config and resolve
           if (!include_user && data.hasOwnProperty("user")) delete data.user;
           if (!include_timeline && data.hasOwnProperty("timeline")) delete data.timeline;
           if (!include_mentions && data.hasOwnProperty("mentions")) delete data.mentions;
-          // save botometer scores and resolve with data
-          data.botometer = botometer;
           resolve(data);
         });
     });
