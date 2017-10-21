@@ -40,7 +40,7 @@ const B = new botometer({
   log_progress: true,
   include_user: true,
   include_timeline: false,
-  include_mentions: false,
+  include_mentions: false
 });
 ```
 
