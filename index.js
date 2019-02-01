@@ -22,16 +22,16 @@ const botometer = function(config) {
   const rate_limit = config.rate_limit || 0;
 
   // whether to console log names as they're collected
-  const log_progress = config.log_progress || true;
+  const log_progress = typeof config.log_progress !== 'undefined' ? config.log_progress : true;
 
   // whether to include user data in output
-  const include_user = config.include_user || true;
+  const include_user = typeof config.include_user !== 'undefined' ? config.include_user : true;
 
   // whether to include timeline data in output
-  const include_timeline = config.include_timeline || false;
+  const include_timeline = typeof config.include_timeline !== 'undefined' ? config.include_timeline : false;
 
   // whether to include mentions data in output
-  const include_mentions = config.include_mentions || false;
+  const include_mentions = typeof config.include_mentions !== 'undefined' ? config.include_mentions : false;
 
   // all logging here
   const writeLog = function(message) {
