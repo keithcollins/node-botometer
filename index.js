@@ -101,6 +101,11 @@ const botometer = function(config) {
           resolve(null);
         })
         .then(botometer => {
+          // if there is no user, it's probably because the user is a protected account and it's impossible to get the botometer score
+          if (!data.user) {
+            return resolve(null);
+          }
+          
           // since we already save full user object,
           // overwrite botometer user prop to keep basic user data
           botometer.user = {
