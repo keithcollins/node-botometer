@@ -101,6 +101,12 @@ const botometer = function(config) {
           resolve(null);
         })
         .then(botometer => {
+          if (typeof botometer !== "object") {
+            console.log(botometer);
+            // if error on botometer resolve with null
+            // Possible errors: 502 Bad gateway…
+            return resolve(null);
+          }
           // if there is no user, it's probably because the user is a protected account and it's impossible to get the botometer score
           if (!data.user) {
             return resolve(null);
