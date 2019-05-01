@@ -103,9 +103,11 @@ const botometer = function(config) {
         .then(botometer => {
           // since we already save full user object,
           // overwrite botometer user prop to keep basic user data
-          botometer.user = {
-            screen_name: data.user.screen_name,
-            user_id: data.user.user_id
+          if(data.user && data.user.hasOwnProperty('screen_name') && data.user.hasOwnProperty('user_id')){
+            botometer.user = {
+              screen_name: data.user.screen_name,
+              user_id: data.user.user_id
+            }  
           }
           // save botometer scores to data
           data.botometer = botometer;
