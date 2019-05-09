@@ -69,11 +69,11 @@ const botometer = function(config) {
   }
 
   // returns a user object, their latest tweets and mentions, and bot score
-  this.getBotScore = function(screen_name) {
-    const data = {user:null,timeline:null,mentions:null};
+  this.getBotScore = function({ screenName, userId }) {
+    const data = { user:null, timeline:null, mentions:null };
     return new Promise((resolve, reject) => {
       // get this user's timeline - latest 200 tweets
-      this.searchTwitter('statuses/user_timeline',{screen_name:screen_name,count:200})
+      this.searchTwitter('statuses/user_timeline', { screen_name:screenName, user_id:userId, count:200 })
         .catch(e => {
           // if error collecting timeline resolve with null
           resolve(null);
@@ -83,11 +83,12 @@ const botometer = function(config) {
           data.user = timeline[0].user;
           data.timeline = timeline;
           // get latest 100 mentions of this user by search screen name
-          return this.searchTwitter('search/tweets',{q:"@"+screen_name,count:100})
+          return this.searchTwitter('search/tweets',{q:"@"+data.user.screen_name, count:100})
         })
         .catch(e => {
           // if error finding mentions move on with empty array
           // because having zero mentions is meaningful
+          // TODO fix case where timeline is empty (timeline[0].user raises an exception)
           return [];
         })
         .then(mentions => {
@@ -130,16 +131,16 @@ const botometer = function(config) {
   }
 
   // takes like six seconds per account to complete
-  this.getBatchBotScores = async function(names,cb) {
+  this.getBatchBotScores = async function(screen_names,cb) {
     const scores = [];
-    for (let name of names) {
-      writeLog("Awaiting score for "+name);
-      const data = await this.getBotScore(name);
+    for (let screen_name of screen_names) {
+      writeLog("Awaiting score for "+screen_name);
+      const data = await this.getBotScore({ screen_name });
       if (data && typeof data.botometer.scores !== "undefined") {
         scores.push(data);
-        writeLog(name+" is a "+data.botometer.scores.universal);
+        writeLog(screen_name+" is a "+data.botometer.scores.universal);
       } else {
-        writeLog("No score found for "+name);
+        writeLog("No score found for "+screen_name);
       }
     }
     cb(scores);
